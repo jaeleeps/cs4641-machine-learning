@@ -1,4 +1,7 @@
-from preparation.stock_data_loader import StockDataLoader
+from src.preparation.nyt_data_loader import NytDataLoader
+from src.preparation.stock_data_loader import StockDataLoader
+from src.preparation.uitl import Util
+
 
 def download_apple_stock_history():
     target_ticker: str = 'AAPL'
@@ -22,7 +25,16 @@ def download_apple_stock_history():
         end_date = end_date,
         interval = interval
     )
-    StockDataLoader.save_pf_as_scv(df, csv_name, './data/raw')
+    Util.save_pf_as_scv(df, csv_name, './data/raw/appl')
+
+def download_nyt_archive():
+    # data = NytDataLoader.get_archive_json(2019, 1)
+    # print(data)
+    NytDataLoader.save_archive_json_by_range(
+        2016, 1,
+        2020, 12
+    )
 
 # data loader functions
 # download_apple_stock_history()
+# download_nyt_archive()

@@ -1,9 +1,5 @@
 import yfinance as yf
 import pandas as pd
-from pydantic import BaseModel
-
-import os
-import sys
 
 # from src._model.stock_data_interface import YFINANCE_INTERVAL_TYPE
 
@@ -50,13 +46,3 @@ class StockDataLoader:
             rounding=rounding
         )
         return data_df
-
-    @staticmethod
-    def save_pf_as_scv(
-            data_df: pd.DataFrame,
-            csv_name: str,
-            relative_path: str):
-        script_dir = os.path.abspath(os.path.dirname(sys.argv[0]) or '.')
-        proj_root_path = os.path.join(script_dir, '../')
-        csv_path = os.path.join(proj_root_path, relative_path)
-        data_df.to_csv(os.path.join(csv_path, csv_name))
