@@ -25,12 +25,20 @@ def download_apple_stock_history():
         end_date = end_date,
         interval = interval
     )
-    Util.save_pf_as_scv(df, csv_name, './data/raw/appl')
+    Util.save_pf_as_csv(df, csv_name, './data/raw/appl')
 
 def download_nyt_archive():
-    # data = NytDataLoader.get_archive_json(2019, 1)
-    # print(data)
     NytDataLoader.save_archive_json_by_range(
+        2016, 1,
+        2020, 12
+    )
+
+def transform_nyt_archive():
+    NytDataLoader.transform_archive_json_by_range(
+        'nyt_archive_',
+        './data/raw/nyt_archive',
+        'nyt_archive_transformed_v1_',
+        './data/processed/nyt_archive/v1',
         2016, 1,
         2020, 12
     )
@@ -38,3 +46,4 @@ def download_nyt_archive():
 # data loader functions
 # download_apple_stock_history()
 # download_nyt_archive()
+# transform_nyt_archive()
