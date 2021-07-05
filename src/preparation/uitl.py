@@ -20,8 +20,8 @@ class Util:
         data_df.to_csv(os.path.join(csv_path, csv_file_name))
 
     @staticmethod
-    def save_json_as_json(
-            data_json: json,
+    def save_dict_as_json(
+            data_dict: dict,
             json_file_name: str,
             relative_path: str
     ):
@@ -29,8 +29,8 @@ class Util:
         proj_root_path = os.path.join(script_dir, '../')
         json_path = os.path.join(proj_root_path, relative_path)
         target_path = os.path.join(json_path, json_file_name)
-        with open(target_path, "w") as json_file:
-            json.dump(data_json, json_file)
+        with open(target_path, "w", encoding='utf-8') as json_file:
+            json.dump(data_dict, json_file, indent='\t')
 
     @staticmethod
     def get_json_dict_by_path(

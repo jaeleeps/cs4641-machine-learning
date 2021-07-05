@@ -39,16 +39,16 @@ class NytDataLoader:
 
         while curr_year <= end_year and curr_month <= end_month:
             print(curr_year, '-', curr_month)
-            # data_json: json = NytDataLoader.get_archive_json(curr_year, curr_month)
-            # file_name: str = 'nyt_archive_{curr_year}-{curr_month}.json'.format(
-            #     curr_year=curr_year,
-            #     curr_month=curr_month if curr_month >= 10 else ('0{curr_month}'.format(curr_month=curr_month))
-            # )
-            # Util.save_json_as_json(
-            #     data_json,
-            #     file_name,
-            #     './data/raw/nyt_archive'
-            # )
+            data_json: json = NytDataLoader.get_archive_json(curr_year, curr_month)
+            file_name: str = 'nyt_archive_{curr_year}-{curr_month}.json'.format(
+                curr_year=curr_year,
+                curr_month=curr_month if curr_month >= 10 else ('0{curr_month}'.format(curr_month=curr_month))
+            )
+            Util.save_json_as_json(
+                data_json,
+                file_name,
+                './data/raw/nyt_archive'
+            )
             curr_month += 1
             if curr_month > 12:
                 curr_month = 1
@@ -79,7 +79,7 @@ class NytDataLoader:
             path: str = os.path.join(raw_dir_path, raw_file_name)
             json_dict: dict = Util.get_json_dict_by_path(path)
 
-            transformed_json: json = NytDataLoader.get_transformed_json(json_dict)
+            transformed_dict: dict = NytDataLoader.get_transformed_dict(json_dict)
             transformed_file_name: str = '{prefix}{curr_year}-{curr_month}.json'.format(
                 prefix=transformed_prefix,
                 curr_year=curr_year,
@@ -87,7 +87,7 @@ class NytDataLoader:
                     curr_month=curr_month
                 )
             )
-            Util.save_json_as_json(transformed_json, transformed_file_name, transformed_dir_path)
+            Util.save_dict_as_json(transformed_dict, transformed_file_name, transformed_dir_path)
 
             curr_month += 1
             if curr_month > 12:
@@ -95,7 +95,7 @@ class NytDataLoader:
                 curr_year += 1
 
     @staticmethod
-    def get_transformed_json(raw_json_dict: dict):
+    def get_transformed_dict(raw_json_dict: dict):
         json_dict: TypedDict('IRawNytArchive', {
             'copyright': str,
             'response': TypedDict('IRawNytArchive_Response')
@@ -119,10 +119,7 @@ class NytDataLoader:
                 date_transformed_list_dict[pub_date_key] = []
             date_transformed_list_dict[pub_date_key].append(transform_v1.dict())
 
-        result_json: json = json.dumps(date_transformed_list_dict,
-                                       indent=2,
-                                       )
-        return result_json
+        return date_transformed_list_dict
 
     @staticmethod
     def get_transformed_v1(doc: dict) -> NytArchiveTransform_V1:

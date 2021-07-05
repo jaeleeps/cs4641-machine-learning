@@ -1,3 +1,5 @@
+import json
+
 from src.preparation.nyt_data_loader import NytDataLoader
 from src.preparation.stock_data_loader import StockDataLoader
 from src.preparation.uitl import Util
@@ -46,4 +48,10 @@ def transform_nyt_archive():
 # data loader functions
 # download_apple_stock_history()
 # download_nyt_archive()
-# transform_nyt_archive()
+transform_nyt_archive()
+# path = '/Users/jaeyoung/GATECH_LECTURES/2021_SUMMER/cs4641/course_test_codes/cs4641-machine-learning/data/processed/nyt_archive/v1/nyt_archive_transformed_v1_2016-01.json'
+# # data = json.loads(path)
+# f = open(path, encoding="UTF-8")
+# data: json = json.loads(f.read())
+# # print(data)
+# print(data.keys())
